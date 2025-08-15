@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <HomeHeader />
-    <HomeBody />
+  <div class="flex flex-col h-screen">
+    <div class="flex-none">
+      <HomeHeader />
+    </div>
+    <div class="flex-1 flex">
+      <HomeBody />
+    </div>
   </div>
 </template>
 

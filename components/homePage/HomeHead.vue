@@ -1,39 +1,47 @@
 <template>
   <div class="bg-base-100 p-6 pl-92 pr-92 rounded-lg shadow-md">
     <!-- Input Fields -->
-<!-- Container -->
-<div class="whitespace-nowrap text-base">
+    <div class="container flex gap-4">
+      <div class="justify-between items-center gap-4 mb-12 w-full input pr-0!">
+        <!-- Search Input -->
+        <label class="flex gap-2 basis-full">
+        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </g>
+        </svg>
+        <input type="search"  placeholder="Search" />
+        </label>
 
-  <!-- Search Input -->
-  <label class="inline-block align-middle mr-4">
-    <svg class="inline h-4 opacity-50 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
-        <circle cx="11" cy="11" r="8"></circle>
-        <path d="m21 21-4.3-4.3"></path>
-      </g>
-    </svg>
-    <input type="search" placeholder="Search" class="inline-block align-middle border rounded px-2 py-1"/>
-  </label>
+        <!-- Vertical Line Separator -->
+        <div class="h-5 w-px bg-gray-300"></div>
 
-  <!-- Vertical Line Separator -->
-  <div class="inline-block align-middle w-px h-5 bg-gray-300 mx-4"></div>
-
-  <!-- Location Input -->
-  <label class="inline-block align-middle mr-4">
-    <svg class="inline h-4 opacity-50 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
-        <circle cx="11" cy="11" r="8"></circle>
-        <path d="m21 21-4.3-4.3"></path>
-      </g>
-    </svg>
-    <input type="search" placeholder="Location" class="inline-block align-middle border rounded px-2 py-1"/>
-  </label>
-
-  <!-- Search Button -->
-  <button class="inline-block align-middle border-2 border-black px-4 py-1 rounded">Search</button>
-
-</div>
-
+        <!-- Location Input -->
+        <label class="flex gap-2 basis-full">
+        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </g>
+        </svg>
+        <input type="search" class="grow" placeholder="location" />
+        </label>
+      </div>
+      <button class="btn btn-outline w-auto! basis-auto! ml-auto border-3 inline-block">Search</button>
+    </div>
     <!-- Filter Buttons -->
     <div class="flex gap-4 mt-4 w-full">
       <button class="btn btn-primary w-auto! basis-auto">Full-Time</button>

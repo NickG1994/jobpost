@@ -2,6 +2,8 @@
 import Alert from '~/components/Alert-Component.vue';
 import {useMyAlertStore} from '~/store/Alert';
 const myAlertStore = useMyAlertStore();
+import { useMyAuthStore } from '~/store/auth';
+const authStore = useMyAuthStore();
 
 const refUsername = ref(null);
 const refEmail = ref(null);
@@ -10,7 +12,7 @@ const refAgreement = ref(false);
 
 const submitErrors = ref<string>(null);
 
-const SubmitSignUp = () => { 
+const SubmitSignUp = async () => { 
   if (refUsername.value && refEmail.value && refPassword.value) {
     // Here you would typically send the data to your backend for processing
     if(refAgreement.value !== true) {
@@ -19,12 +21,9 @@ const SubmitSignUp = () => {
       myAlertStore.triggerAlert('warning', submitErrors.value ,3000);
       return;
     }
-    console.log("Sign Up Data:", {
-      username: refUsername.value,
-      email: refEmail.value,
-      password: refPassword.value,
-      agreement: refAgreement.value
-    });
+
+    await authStore.signUp(refUsername.value, refEmail.value, refPassword.value, 'user'); // Assuming 'user' is the default userType
+    
     // Reset form fields after submission
     refUsername.value = null;
     refEmail.value = null;

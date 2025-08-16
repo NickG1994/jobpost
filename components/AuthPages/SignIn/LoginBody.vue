@@ -1,5 +1,6 @@
 <template>
   <div id="login-page">
+    <Alert />
     <div class="login">
       <div class="login-body">
         <div class="login-form">
@@ -17,7 +18,7 @@
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                 </g>
               </svg>
-              <input type="email" placeholder="mail@site.com" required />
+              <input v-model="refEmail" type="email" placeholder="mail@site.com" required />
             </label>
             <div class="validator-hint hidden">Enter valid email address</div>
             <label class="input validator">
@@ -36,6 +37,7 @@
                 </g>
               </svg>
               <input
+                v-model="refPassword"
                 type="password"
                 required
                 placeholder="Password"
@@ -56,7 +58,8 @@
       </div>
       <div class="login-bottom">
         <div>
-          <button @click="SubmitSignUp" class="btn btn-primary">Sign Up</button>
+          <button @click="submitSignIn" class="btn btn-primary"><span v-if="!Auth.isloading">Sign In</span><span v-else class="loading loading-spinner text-success"></span></button>
+          
         </div>
         <p>Don't have an account? <NuxtLink to="/auth/SignUp">Sign Up</NuxtLink></p>
       </div>
@@ -65,11 +68,35 @@
 </template>
 
 <script lang="ts" setup>
-import { NuxtLink } from '#components';
+import {useMyAlertStore} from '~/store/Alert';;
+const alertStore = useMyAlertStore();
+import { useMyAuthStore } from '~/store/Auth';
+const authStore = useMyAuthStore();
 
-//import { useMyAuthStore } from '~/store/Auth';
-//const authStore = useMyAuthStore();
+import Alert from '~/components/Alert-Component.vue';
 
+const refEmail = ref('');
+const refPassword = ref('');
+
+const {Auth} = storeToRefs(authStore);
+
+watch(() => Auth.value.isAuthenticated, (newValue) => {
+  if (newValue) {
+    alertStore.triggerAlert('success', 'Login successful', 3000);
+    // Redirect to the home page or dashboard
+    navigateTo('/');
+  }
+}, { immediate: true });
+
+const submitSignIn = () => {
+  if (refEmail.value && refPassword.value) {
+    authStore.login(refEmail.value, refPassword.value)
+  } else {
+    alertStore.triggerAlert('error', 'Please fill in all fields and agree to the terms!',3000);
+    return
+  }
+
+};
 </script>
 
 <style>

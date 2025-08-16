@@ -1,5 +1,5 @@
 <template>
-  <div class="pl-32 pr-32">
+  <div v-if="Auth.isAuthenticated" class="pl-32 pr-32">
     <div class="navbar bg-base-100 shadow-sm flex justify-between">
       <!-- Logo -->
       <div>
@@ -61,6 +61,9 @@
 </template>
 
 <script lang="ts" setup>
+import { useMyAuthStore } from '~/store/Auth';
+const authStore = useMyAuthStore();
+const { Auth } = storeToRefs(authStore);
 </script>
 
 <style>

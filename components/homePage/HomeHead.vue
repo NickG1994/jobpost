@@ -1,97 +1,59 @@
 <template>
-  <div class="bg-white rounded-lg shadow p-4 mb-6">
-    <div class="flex items-center gap-0">
-      <!-- Search by Title/Keyword -->
-      <div class="relative w-1/2">
-        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
+  <div class="bg-base-100 p-6 xl:pl-92 xl:pr-92 rounded-lg shadow-md">
+    <!-- Input Fields -->
+    <div class="container flex gap-4">
+      <div class="justify-between items-center gap-4 mb-12 w-full input pr-0!">
+        <!-- Search Input -->
+        <label class="flex gap-2 basis-full">
+        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
             fill="none"
-            viewBox="0 0 24 24"
-            stroke="white"
+            stroke="currentColor"
           >
-            <circle
-              cx="11"
-              cy="11"
-              r="8"
-              stroke="white"
-              stroke-width="2"
-              fill="none"
-            />
-            <line
-              x1="21"
-              y1="21"
-              x2="16.65"
-              y2="16.65"
-              stroke="white"
-              stroke-width="2"
-            />
-          </svg>
-        </span>
-        <input
-          v-model="searchTitle"
-          type="text"
-          placeholder="Job title or keyword"
-          class="input input-bordered rounded-none rounded-l-lg pl-10 w-full"
-        />
-      </div>
-      <!-- Vertical Divider -->
-      <div class="h-10 w-px bg-base-300 mx-2"></div>
-      <!-- Search by Location -->
-      <div class="relative w-1/2">
-        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </g>
+        </svg>
+        <input type="search"  placeholder="Search" />
+        </label>
+
+        <!-- Vertical Line Separator -->
+        <div class="h-5 w-px bg-gray-300"></div>
+
+        <!-- Location Input -->
+        <label class="flex gap-2 basis-full">
+        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
             fill="none"
-            viewBox="0 0 24 24"
-            stroke="white"
+            stroke="currentColor"
           >
-            <path
-              stroke="white"
-              stroke-width="2"
-              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"
-            />
-          </svg>
-        </span>
-        <input
-          v-model="searchLocation"
-          type="text"
-          placeholder="Location"
-          class="input input-bordered rounded-none rounded-r-lg pl-10 w-full"
-        />
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </g>
+        </svg>
+        <input type="search" class="grow" placeholder="location" />
+        </label>
       </div>
+      <button class="btn btn-outline w-auto! basis-auto! ml-auto border-3 inline-block">Search</button>
     </div>
-    <!-- Filters -->
-    <div class="mt-6 flex flex-wrap gap-2">
-      <button
-        v-for="filter in filters"
-        :key="filter"
-        @click="toggleFilter(filter)"
-        class="btn btn-sm"
-        :class="{
-          'btn-primary': activeFilters.includes(filter),
-          'btn-outline': !activeFilters.includes(filter)
-        }"
-      >
-        {{ filter }}
-      </button>
+    <!-- Filter Buttons -->
+    <div class="flex gap-4 mt-4 w-full">
+      <button class="btn btn-primary w-auto! basis-auto">Full-Time</button>
+      <button class="btn btn-secondary w-auto! basis-auto">Part-Time</button>
+      <button class="btn btn-outline w-auto! basis-auto">Remote</button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  const searchTitle = ref('');
 </script>
 
 <style scoped>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-span {
-  @apply z-100;
-}
-
+/* Add custom styles if needed */
 </style>

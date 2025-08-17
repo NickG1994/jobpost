@@ -6,7 +6,7 @@ export const useMyAuthStore = defineStore('myAuthStore', {
   state: () => ({
   Auth: typeof window !== 'undefined' ? useStorage('Auth',{
       isAuthenticated: true,
-      user: 'dgaona2',
+      user: '',
       token: null,
       isloading: false,
       error: null,
@@ -27,24 +27,22 @@ export const useMyAuthStore = defineStore('myAuthStore', {
     async login(email: string, password: string) {
       try {
         if (import.meta.client) {
-
-          this.Auth.isloading = true
-          const res = useStorage('Auth', {
-            isAuthenticated: false,
-            user: null,
-            token: null,
-            isloading: false,
-            error: null,
-            login: false,
-            logout: false
-          })
-
-          if (!email || !password) {
-            throw new Error('Email and password are required')
+          const storedAuth = localStorage.getItem('Auth')
+          if (!storedAuth.user || storedAuth.user !== '') {
+            localStorage.removeItem('Auth')
+            console.log('Auth data found in localStorage, removing it')
           }
-          const data = await this.checkUserExist(email, password)
+
+          //if there is not data in localStorage object, set it to default
+          if (!storedAuth) {
+            console.log('No Auth data found in localStorage, setting default values')
       
           }
+          else {
+            console.log('testing storedAuth', storedAuth)
+          }
+        }
+          
         } catch (error) {
         console.error('Login failed:', error)
         this.Auth.error = error.message

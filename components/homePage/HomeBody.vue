@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-start bg-base-100 pl-32 pr-32 pt-4 pb-4 gap-8">
+  <div class="flex justify-between items-start bg-base-100 pl-32 pr-32 pt-4 pb-4 gap-8 w-full">
     <!-- Left: Job Cards -->
     <div class="left w-1/2">
       <div

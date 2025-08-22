@@ -58,8 +58,8 @@
       </div>
       <div class="login-bottom">
         <div>
-          <button @click="submitSignIn" class="btn btn-primary"><span v-if="!Auth.isloading">Sign In</span><span v-else class="loading loading-spinner text-success"></span></button>
-          
+          <button @click="submitSignIn" class="btn btn-primary"><span v-if="!isLoading">Sign In</span><span v-else class="loading loading-spinner text-success"></span></button>
+
         </div>
         <p>Don't have an account? <NuxtLink to="/auth/SignUp">Sign Up</NuxtLink></p>
       </div>
@@ -78,9 +78,9 @@ import Alert from '~/components/Alert-Component.vue';
 const refEmail = ref('');
 const refPassword = ref('');
 
-const {Auth} = storeToRefs(authStore);
+const {isAuthenticated, isLoading} = storeToRefs(authStore);
 
-watch(() => Auth.value.isAuthenticated, (newValue) => {
+watch(() => isAuthenticated.value, (newValue) => {
   if (newValue) {
     alertStore.triggerAlert('success', 'Login successful', 3000);
     // Redirect to the home page or dashboard

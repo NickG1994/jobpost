@@ -6,18 +6,16 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   const authPaths = ['/auth/signin', '/auth/signup']
 
-  if (myAuth.Auth.isAuthenticated) {
+  if (myAuth.isAuthenticated) {
     // Redirect to the sign-in page if not authenticated and trying to access a protected route
-    console.log('Authenticated user:', myAuth.Auth.user)
+    console.log('Authenticated user:', myAuth.user)
     if(to.path !== '/') {
-      
       return navigateTo('/')
     }
 
     return true
   } 
-
-  if (!myAuth.Auth.isAuthenticated) {
+  if (!myAuth.isAuthenticated) {
     // Redirect to the sign-in page if not authenticated and trying to access a protected route
     console.log('Unauthenticated user, redirecting to sign-in:', to.path)
     if(authPaths.includes(to.path.toLowerCase())) {

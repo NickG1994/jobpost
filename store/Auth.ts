@@ -2,117 +2,99 @@ import { useMyAlertStore } from '~/store/Alert'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 
-export const useMyAuthStore = defineStore('myAuthStore', {
-  state: () => ({
-  Auth: typeof window !== 'undefined' ? useStorage('Auth',{
-      isAuthenticated: true,
-      user: '',
-      token: null,
-      isloading: false,
-      error: null,
-      login: false,
-      logout: false
-  }) :
-      {
-      isAuthenticated: false,
-      user: 'dgaona2',
-      token: null,
-      isloading: false,
-      error: null,
-      login: false,
-      logout: false
+export const useMyAuthStore = defineStore('myAuthStore', () => {
+  const isAuthenticated = useStorage('isAuthenticated', false)
+  const user = useStorage('user', { username: '', password: '' })
+  const token = useStorage('token', null)
+  const isLoading = ref(false)
+  const error = ref(null)
+  const login = ref(false)
+  const logout = ref(false)
+
+  async function loginAction(email: string, password: string) {
+    try {
+      if (import.meta.client) {
+        const result = await checkUserExist(email, password)
+        if (result.status === 'success') {
+          user.value = result.user
+          isAuthenticated.value = true
+          token.value = result.user.token || null
+          error.value = null
+          console.log('User is authenticated:', isAuthenticated.value)
+        } else {
+          error.value = result.message || 'Invalid email or password'
+          isAuthenticated.value = false
+          user.value = { username: '', password: '' }
+          token.value = null
+        }
+      }
+    } catch (err: any) {
+      console.error('Login failed:', err)
+      error.value = err.message
+      isAuthenticated.value = false
+      user.value = { username: '', password: '' }
+      token.value = null
+      isLoading.value = false
+      throw new Error('Login failed: ' + err.message)
     }
-   }),
-  actions: {
-    async login(email: string, password: string) {
-      try {
-        if (import.meta.client) {
-          const storedAuth = localStorage.getItem('Auth')
-          if (!storedAuth.user || storedAuth.user !== '') {
-            localStorage.removeItem('Auth')
-            console.log('Auth data found in localStorage, removing it')
-          }
+  }
 
-          //if there is not data in localStorage object, set it to default
-          if (!storedAuth) {
-            console.log('No Auth data found in localStorage, setting default values')
-      
-          }
-          else {
-            console.log('testing storedAuth', storedAuth)
-          }
-        }
-          
-        } catch (error) {
-        console.error('Login failed:', error)
-        this.Auth.error = error.message
-        this.Auth.isAuthenticated = false
-        this.Auth.isloading = false
-        throw new Error('Login failed: ' + error.message)
-      }
-      
-    },
-    logout() {
-      this.Auth.isAuthenticated = false
-      this.Auth.user = null
-      this.Auth.token = null
-      this.Auth.isloading = false
-      this.Auth.login = false
-      this.Auth.logout = true
-      useMyAlertStore().triggerAlert(
-        'success',
-        'You have been logged out successfully',
-        5000
-      )
-    },
-    async checkUserExist(email: string, password: string) {
-      // Logic to check user credentials
-      const {status,message, user} = await $fetch('/api/auth/getUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email,
-          password
-        }),
-      }).catch((error) => {
-        throw new Error('Failed to fetch user: ' + error.message)
-      })
-      if (user) {
-        return {status, message, user}
-      }
-      else {
-        return {
-          status: 'error',
-          message: 'User not found or invalid credentials',
-          user: null
-        }
-      }
-      
-    },
-    async signUp(email: string, username: string, password: string, userType: string) {
-      // Logic to create a new user
-      if(!email || !username || !password) {
-        throw new Error('Email, username, and password are required')
-      }
+  function logoutAction() {
+    isAuthenticated.value = false
+    user.value = { username: '', password: '' }
+    token.value = null
+    isLoading.value = false
+    login.value = false
+    logout.value = true
+    useMyAlertStore().triggerAlert(
+      'success',
+      'You have been logged out successfully',
+      5000
+    )
+  }
 
-      // Call the API to create a new user
-      await $fetch('/api/auth/create-user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email,  
-          username,
-          password,
-          userType
-        }),
-      }).catch((error) => {
-        console.error('Error creating user:', error)
-        throw new Error('Failed to create user: ' + error.message)
-      })
-    },
+  async function checkUserExist(email: string, password: string) {
+    const { status, message, user: foundUser } = await $fetch('/api/auth/getUser', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    }).catch((error) => {
+      throw new Error('Failed to fetch user: ' + error.message)
+    })
+
+    if (foundUser) {
+      return { status, message, user: foundUser }
+    } else {
+      return { status: 'error', message: 'User not found or invalid credentials', user: null }
+    }
+  }
+
+  async function signUp(email: string, username: string, password: string, userType: string) {
+    if (!email || !username || !password) {
+      throw new Error('Email, username, and password are required')
+    }
+
+    await $fetch('/api/auth/create-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, username, password, userType }),
+    }).catch((error) => {
+      console.error('Error creating user:', error)
+      throw new Error('Failed to create user: ' + error.message)
+    })
+  }
+
+  return {
+    isAuthenticated,
+    user,
+    token,
+    isLoading,
+    error,
+    login,
+    logout,
+    login: loginAction,
+    logout: logoutAction,
+    checkUserExist,
+    signUp,
   }
 })

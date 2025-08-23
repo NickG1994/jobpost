@@ -58,8 +58,7 @@
       </div>
       <div class="login-bottom">
         <div>
-          <button @click="submitSignIn" class="btn btn-primary"><span v-if="!isLoading">Sign In</span><span v-else class="loading loading-spinner text-success"></span></button>
-
+          <button @click="submitSignIn" :disabled="isLoading" class="btn btn-primary"><span v-if="!isLoading">Sign In</span><span v-else class="loading loading-spinner text-success"></span></button>
         </div>
         <p>Don't have an account? <NuxtLink to="/auth/SignUp">Sign Up</NuxtLink></p>
       </div>
@@ -90,7 +89,7 @@ watch(() => isAuthenticated.value, (newValue) => {
 
 const submitSignIn = () => {
   if (refEmail.value && refPassword.value) {
-    authStore.login(refEmail.value, refPassword.value)
+    authStore.loginAction(refEmail.value, refPassword.value)
   } else {
     alertStore.triggerAlert('error', 'Please fill in all fields and agree to the terms!',3000);
     return

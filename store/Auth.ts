@@ -1,31 +1,33 @@
-import { useMyAlertStore } from '~/store/Alert'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
+import { useMyAlertStore } from '~/store/Alert'
 
 export const useMyAuthStore = defineStore('myAuthStore', () => {
+  // Persistent state via VueUse
   const isAuthenticated = useStorage('isAuthenticated', false)
   const user = useStorage('user', { username: '', password: '' })
-  const token = useStorage('token', null)
-  const isLoading = ref(false)
-  const error = ref(null)
-  const login = ref(false)
-  const logout = ref(false)
+  const token = useStorage<string | null>('token', null)
 
+  // Non-persistent state
+  const isLoading = ref(false)
+  const error = ref<string | null>(null)
+
+  // --- Actions ---
   async function loginAction(email: string, password: string) {
     try {
-      if (import.meta.client) {
-        const result = await checkUserExist(email, password)
-        if (result.status === 'success') {
-          user.value = result.user
-          isAuthenticated.value = true
-          token.value = result.user.token || null
-          error.value = null
-          console.log('User is authenticated:', isAuthenticated.value)
-        } else {
-          error.value = result.message || 'Invalid email or password'
-          isAuthenticated.value = false
-          user.value = { username: '', password: '' }
-          token.value = null
+      isLoading.value = true
+      const result = await checkUserExist(email, password)
+      if(import.meta.client) {
+      if (result.status === 'success' && result.user) {
+        user.value = result.user
+        isAuthenticated.value = true
+        token.value = result.user.token || null
+        error.value = null
+      } else {
+        error.value = result.message || 'Invalid email or password'
+        isAuthenticated.value = false
+        user.value = { username: '', password: '' }
+        token.value = null
         }
       }
     } catch (err: any) {
@@ -34,8 +36,9 @@ export const useMyAuthStore = defineStore('myAuthStore', () => {
       isAuthenticated.value = false
       user.value = { username: '', password: '' }
       token.value = null
-      isLoading.value = false
       throw new Error('Login failed: ' + err.message)
+    } finally {
+      isLoading.value = false
     }
   }
 
@@ -44,8 +47,6 @@ export const useMyAuthStore = defineStore('myAuthStore', () => {
     user.value = { username: '', password: '' }
     token.value = null
     isLoading.value = false
-    login.value = false
-    logout.value = true
     useMyAlertStore().triggerAlert(
       'success',
       'You have been logged out successfully',
@@ -85,15 +86,15 @@ export const useMyAuthStore = defineStore('myAuthStore', () => {
   }
 
   return {
+    // state
     isAuthenticated,
     user,
     token,
     isLoading,
     error,
-    login,
-    logout,
-    login: loginAction,
-    logout: logoutAction,
+    // actions
+    loginAction,
+    logoutAction,
     checkUserExist,
     signUp,
   }

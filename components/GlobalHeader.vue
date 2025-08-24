@@ -52,7 +52,7 @@
               </a>
             </li>
             <li><a>Settings</a></li>
-            <li><a>Logout</a></li>
+            <li v-on:click="logout"><a>Logout</a></li>
           </ul>
         </div>
       </div>
@@ -64,6 +64,10 @@
 import { useMyAuthStore } from '~/store/Auth';
 const authStore = useMyAuthStore();
 const { isAuthenticated } = storeToRefs(authStore);
+
+const logout = async () => {
+  await authStore.logoutAction();
+};
 </script>
 
 <style>

@@ -63,6 +63,7 @@ export const useMyAuthStore = defineStore('myAuthStore', {
         'You have been logged out successfully',
         5000
       )
+      navigateTo('/auth/signin')
     },
 
     async checkUserExist(email: string, password: string) {

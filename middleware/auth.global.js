@@ -4,6 +4,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const pinia = useNuxtApp().$pinia
   const myAuth = useMyAuthStore(pinia)
 
+  if(!import.meta.client) return 
   const authPaths = ['/auth/signin', '/auth/signup']
 
   if (myAuth.isAuthenticated) {

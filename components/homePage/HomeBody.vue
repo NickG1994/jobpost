@@ -94,7 +94,7 @@ const jobs = ref([
   },
 ]);
 
-const selectedJob = ref(null);
+const selectedJob = ref(jobs.value[0]); // Default to the first job
 
 // Function to select a job card
 const selectJob = (job: any) => {

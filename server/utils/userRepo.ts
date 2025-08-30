@@ -31,19 +31,29 @@ export async function createUser(event: H3Event, email: string, username: string
     if(email === '' || username === '' || password === '') {
     throw new Error('Email, username, and password are required')
     }
-    //console.log(`Creating user with email: ${email}, username: ${username}, and userType: ${userType}`)
     // A stored procedure to create a new user
-    const result = await query(event, 'CALL Create_New_User(?, ?, ?, ?, CURDATE())', [email, username, password, userType])
-    //console.log('Result from user creation:', result)
-    if (result && result.length > 0) {
-      const user = result[0][0]
+    const data = await query(event, 'CALL Create_New_User(?, ?, ?, ?, CURDATE())', [email, username, password, userType])
+    console.log('Result from user creation:', data)
+    if (data && data.length > 0) {
+      console.log('User created successfully:', data)
+      const user = data[0][0]
       return user
     } else {
-      throw new Error('User creation failed')
+      console.log('No user data returned from the database after creation')
+      return createError({
+        statusCode: 500,  
+        statusMessage: 'User creation failed',
+        message: 'No user data returned from the database',
+
+      })
     }    
   } catch (error) {
     console.error('Error creating user:', error)
-    throw new Error('Failed to create user: ' + error.message)
+    return createError({
+      statusCode: 500,
+      statusMessage: 'Internal Server Error',
+      message: error.message || 'An unexpected error occurred',
+    })
   }
 
 } 

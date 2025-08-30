@@ -103,7 +103,6 @@ const selectJob = (job: any) => {
   } else {
     selectedJob.value = job; // Select the clicked job
   }
-  //selectedJob.value = job;
 };
 </script>
 

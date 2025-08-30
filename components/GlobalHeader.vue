@@ -3,7 +3,7 @@
     <div class="navbar bg-base-100 shadow-sm flex justify-between">
       <!-- Logo -->
       <div>
-        <a class="btn btn-ghost text-xl">daisyUI</a>
+        <NuxtLink to="/" btn btn-ghost text-xl>daisyUI</NuxtLink> 
       </div>
 
       <!-- Search Bar -->
@@ -46,10 +46,9 @@
             class="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
           >
             <li>
-              <a class="justify-between">
+              <NuxtLink to="Dashboard" class="justify-between">
                 Profile
-                <span class="badge">New</span>
-              </a>
+              </NuxtLink> 
             </li>
             <li><a>Settings</a></li>
             <li v-on:click="logout"><a>Logout</a></li>

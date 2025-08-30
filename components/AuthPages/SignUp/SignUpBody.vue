@@ -14,29 +14,57 @@ const submitErrors = ref<string>(null);
 
 const SubmitSignUp = async () => { 
   if (refUsername.value && refEmail.value && refPassword.value) {
-    // Here you would typically send the data to your backend for processing
-    if(refAgreement.value !== true) {
-      console.error("You must agree to the terms and conditions.");
+    // Check agreement
+    if (refAgreement.value !== true) {
       submitErrors.value = "You must agree to the terms and conditions.";
-      myAlertStore.triggerAlert('warning', submitErrors.value ,3000);
+      console.error(submitErrors.value);
+      myAlertStore.triggerAlert('warning', submitErrors.value, 3000);
       return;
     }
 
-    await authStore.signUp(refUsername.value, refEmail.value, refPassword.value, 'user'); // Assuming 'user' is the default userType
-    
-    // Reset form fields after submission
-    refUsername.value = null;
-    refEmail.value = null;
-    refPassword.value = null;
-    refAgreement.value = false;
+    try {
+      const response = await authStore.signUp(
+        refEmail.value,       // 📝 make sure order matches your store
+        refUsername.value, 
+        refPassword.value, 
+        'user'
+      );
+
+      if (response.status === 'error' || response.statusCode >= 400) {
+        // Show backend error
+        submitErrors.value = response.message || "Sign up failed. Please try again.";
+        console.error("Sign up failed:", response);
+        myAlertStore.triggerAlert('error', submitErrors.value, 4000);
+        return;
+      }
+
+      // Success
+      console.log("Sign up successful:", response);
+      submitErrors.value = null;
+      myAlertStore.triggerAlert('success', 'Sign up successful! You can now log in.', 4000);
+
+      // Reset form fields
+      refUsername.value = null;
+      refEmail.value = null;
+      refPassword.value = null;
+      refAgreement.value = false;
+
+    } catch (err: any) {
+      // Handle fetch/network errors
+      const message = err.response?.message || err.message || "Unexpected signup error";
+      const code = err.response?.statusCode || 500;
+      submitErrors.value = `[${code}] ${message}`;
+      console.error("Sign up failed (catch):", submitErrors.value);
+      myAlertStore.triggerAlert('error', submitErrors.value, 4000);
+    }
   } else {
-    console.error("Please fill in all fields and agree to the terms.");
+    // Missing fields
     submitErrors.value = "Please fill in all fields and agree to the terms!";
-    myAlertStore.triggerAlert('error', 'Please fill in all fields and agree to the terms!',3000);
-    // Optionally, you can also display an alert or message to the user
-    return;
+    console.error(submitErrors.value);
+    myAlertStore.triggerAlert('error', submitErrors.value, 3000);
   }
-}
+};
+
 </script>
 
 <template>

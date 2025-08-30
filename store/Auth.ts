@@ -87,14 +87,13 @@ export const useMyAuthStore = defineStore('myAuthStore', {
         throw new Error('Email, username, and password are required')
       }
 
-      await $fetch('/api/auth/create-user', {
+      const response = await $fetch('/api/auth/create-user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, username, password, userType }),
-      }).catch((error) => {
-        console.error('Error creating user:', error)
-        throw new Error('Failed to create user: ' + error.message)
       })
+      
+      return response
     },
   },
 })

@@ -11,13 +11,13 @@ const refPassword = ref(null);
 const refAgreement = ref(false);
 
 const submitErrors = ref<string>(null);
+const elHint = ref([])
 
 const SubmitSignUp = async () => { 
   if (refUsername.value && refEmail.value && refPassword.value) {
     // Check agreement
     if (refAgreement.value !== true) {
       submitErrors.value = "You must agree to the terms and conditions.";
-      console.error(submitErrors.value);
       myAlertStore.triggerAlert('warning', submitErrors.value, 3000);
       return;
     }
@@ -33,13 +33,11 @@ const SubmitSignUp = async () => {
       if (response.status === 'error' || response.statusCode >= 400) {
         // Show backend error
         submitErrors.value = response.message || "Sign up failed. Please try again.";
-        console.error("Sign up failed:", response);
+        console.error("Sign up failed:", response.data);
         myAlertStore.triggerAlert('error', submitErrors.value, 4000);
         return;
       }
 
-      // Success
-      console.log("Sign up successful:", response);
       submitErrors.value = null;
       myAlertStore.triggerAlert('success', 'Sign up successful! You can now log in.', 4000);
 
@@ -48,6 +46,8 @@ const SubmitSignUp = async () => {
       refEmail.value = null;
       refPassword.value = null;
       refAgreement.value = false;
+      $router.push('/');
+
 
     } catch (err: any) {
       // Handle fetch/network errors
@@ -99,7 +99,7 @@ const SubmitSignUp = async () => {
                         title="Only letters, numbers or dash"
                       />
                     </label>
-                    <p class="validator-hint hidden">
+                    <p :ref="(el) => {elHint.push(el)}" class="validator-hint hidden">
                       Must be 3 to 30 characters
                       <br />containing only letters, numbers or dash
                     </p>

@@ -1,10 +1,9 @@
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col h-screen pl-92 pr-92">
+    <NuxtLayout>
       <HomeHeader />
-
-    <div class="flex-1 flex">
       <HomeBody />
-    </div>
+    </NuxtLayout> 
   </div>
 </template>
 

@@ -13,11 +13,9 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const {response,error} = await createUser(event, email, username, password, 'user'); // Assuming 'user' is the default userType
-    console.error('User creation result:', response);
-    console.error('User creation error:', error);
-    
-    return { response }
+    const response = await createUser(event, email, username, password, 'user'); // Assuming 'user' is the default userType
+    console.log('User creation response:', response);
+    return response 
     
   } catch (error: any) {
     console.error('Error during user authentication:', error);

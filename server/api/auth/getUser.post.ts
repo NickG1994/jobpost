@@ -16,13 +16,14 @@ export default defineEventHandler(async (event) => {
     });
 
     if (!user) {
+      console.log('User not found or invalid credentials');
       return {
         status: 'error',
         message: 'User not found or invalid credentials',
         user: null
       };
     }
-
+    console.log('User found:', user);
     return {
       status: 'success',
       message: 'User authenticated successfully',

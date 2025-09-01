@@ -83,17 +83,23 @@ export const useMyAuthStore = defineStore('myAuthStore', {
     },
 
     async signUp(email: string, username: string, password: string, userType: string) {
-      if (!email || !username || !password) {
-        throw new Error('Email, username, and password are required')
+      try {
+        if (!email || !username || !password) {
+          throw new Error('Email, username, and password are required')
+        }
+
+        const response = await $fetch('/api/auth/create-user', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, username, password, userType }),
+        })
+
+        return response        
+      } catch (error) {
+        console.error('Sign up failed:', error)
+        throw new Error('Sign up failed: ' + error.message)
       }
 
-      const response = await $fetch('/api/auth/create-user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, username, password, userType }),
-      })
-      
-      return response
     },
   },
 })

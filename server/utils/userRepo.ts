@@ -26,34 +26,69 @@ export async function getUserByUsernamePassword(event: H3Event, email: string, p
   }
 }
 
-export async function createUser(event: H3Event, email: string, username: string, password: string, userType: string): Promise<createUserParams> {
+export async function createUser(
+  event: H3Event,
+  email: string,
+  username: string,
+  password: string,
+  userType: string
+): Promise<createUserParams> {
   try {
-    if(email === '' || username === '' || password === '') {
-    throw new Error('Email, username, and password are required')
+    // Validate required fields
+    if (!email || !username || !password) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Bad Request',
+        message: 'Email, username, and password are required',
+      })
     }
-    // A stored procedure to create a new user
-    const data = await query(event, 'CALL Create_New_User(?, ?, ?, ?, CURDATE())', [email, username, password, userType])
-    console.log('Result from user creation:', data)
-    if (data && data.length > 0) {
-      console.log('User created successfully:', data)
-      const user = data[0][0]
+
+    // Call stored procedure
+    const data = await query(
+      event,
+      'CALL Create_New_User(?, ?, ?, ?, CURDATE())',
+      [email, username, password, userType]
+    )
+
+    if (data && data.length > 0 && data[0].length > 0) {
+      const user = data[0][0] as createUserParams
+      console.log('User created successfully:', user)
       return user
     } else {
-      console.log('No user data returned from the database after creation')
-      return createError({
-        statusCode: 500,  
+      throw createError({
+        statusCode: 500,
         statusMessage: 'User creation failed',
         message: 'No user data returned from the database',
-
       })
-    }    
-  } catch (error) {
+    }
+  } catch (error: any) {
     console.error('Error creating user:', error)
-    return createError({
+
+    // Handle MySQL duplicate entry (unique constraint violation)
+    if (error.code === 'ER_DUP_ENTRY' || error.errno === 1062) {
+      let field = 'field'
+      if (error.sqlMessage?.includes('sec_email_UNIQUE')) field = 'email'
+      if (error.sqlMessage?.includes('sec_username_UNIQUE')) field = 'username'
+      if (error.sqlMessage?.includes('sec_password_hash_UNIQUE')) field = 'password'
+
+      throw createError({
+        statusCode: 409, // Conflict
+        statusMessage: 'Duplicate Entry',
+        message: `The provided ${field} already exists.`,
+      })
+    }
+
+    // If it's already an H3Error, rethrow
+    if (error.statusCode) {
+      throw error
+    }
+
+    // Default fallback
+    throw createError({
       statusCode: 500,
       statusMessage: 'Internal Server Error',
       message: error.message || 'An unexpected error occurred',
     })
   }
+}
 
-} 

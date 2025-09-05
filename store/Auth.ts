@@ -13,7 +13,7 @@ export const useMyAuthStore = defineStore('myAuthStore', {
     isLoading: false,
     error: null as string | null,
   }),
-  hydrate(state,initialState) {
+  hydrate(state, initialState) {
     if (import.meta.client) {
       state.isAuthenticated = useStorage('isAuthenticated', false)
       state.user = useStorage('user', {})
@@ -26,6 +26,7 @@ export const useMyAuthStore = defineStore('myAuthStore', {
       try {
         this.isLoading = true
         const result = await this.checkUserExist(email, password)
+        console.log(result)
         if (import.meta.client) {
           if (result.status === 'success' && result.user) {
             this.user = result.user
@@ -38,7 +39,7 @@ export const useMyAuthStore = defineStore('myAuthStore', {
             this.isAuthenticated = false
             this.user = { username: '', password: '' }
             this.token = null
-            console.warn('Login failed:', this.error)
+            return createError({ statusCode: 401, statusMessage: this.error })
           }
         }
       } catch (err: any) {
@@ -47,7 +48,7 @@ export const useMyAuthStore = defineStore('myAuthStore', {
         this.isAuthenticated = false
         this.user = { username: '', password: '' }
         this.token = null
-        throw new Error('Login failed: ' + err.message)
+        return createError({ statusCode: 500, statusMessage: err.message })
       } finally {
         this.isLoading = false
       }
@@ -74,7 +75,6 @@ export const useMyAuthStore = defineStore('myAuthStore', {
       }).catch((error) => {
         throw new Error('Failed to fetch user: ' + error.message)
       })
-
       if (foundUser) {
         return { status, message, user: foundUser }
       } else {

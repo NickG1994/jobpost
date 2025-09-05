@@ -17,11 +17,10 @@ export default defineEventHandler(async (event) => {
 
     if (!user) {
       console.log('User not found or invalid credentials');
-      return {
-        status: 'error',
-        message: 'User not found or invalid credentials',
-        user: null
-      };
+      return createError({
+        statusCode: 401,
+        statusMessage: 'User not found or invalid credentials',
+      });
     }
     console.log('User found:', user);
     return {

@@ -87,13 +87,29 @@ watch(() => isAuthenticated.value, (newValue) => {
   }
 }, { immediate: true });
 
-const submitSignIn = () => {
-  if (refEmail.value && refPassword.value) {
-    authStore.loginAction(refEmail.value, refPassword.value)
-  } else {
-    alertStore.triggerAlert('error', 'Please fill in all fields and agree to the terms!',3000);
-    return
+const submitSignIn = async () => {
+  try {
+    if (refEmail.value && refPassword.value) {
+      const response = await authStore.loginAction(refEmail.value, refPassword.value)
+      console.log(response?.statusCode)
+      if(response.statusCode === 500) {
+        alertStore.triggerAlert('error', 'Login failed: ' + response.statusMessage, 3000);
+      }
+      else if(response.statusCode === 401) {
+        alertStore.triggerAlert('error', 'Login failed: ' + response.statusMessage, 3000);
+      }
+      else {
+        // Successful login is handled by the watcher above
+        return
+      }
+    } else {
+      alertStore.triggerAlert('error', 'Please fill in all fields and agree to the terms!',3000);
+      return
+    }
+  } catch (error) {
+    alertStore.triggerAlert('error', 'Login failed: ' + error.message, 3000);
   }
+
 
 };
 </script>

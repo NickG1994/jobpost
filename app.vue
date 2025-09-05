@@ -3,7 +3,6 @@ import GlobalHeader from './components/GlobalHeader.vue';
 </script>
 <template>
   <div id="app-page" class="">
-    <GlobalHeader/>
     <NuxtPage/>
   </div>
 </template>

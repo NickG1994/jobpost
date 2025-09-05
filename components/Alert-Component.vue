@@ -11,6 +11,7 @@
 import  {useMyAlertStore} from '~/store/Alert';
 const myAlertStore = useMyAlertStore();
 const {alert} = storeToRefs(myAlertStore);
+console.log('Alert component initialized with alert:', alert, 'and type:', alert.type);
 </script>
 
 <style scoped>
@@ -25,6 +26,6 @@ const {alert} = storeToRefs(myAlertStore);
   @apply opacity-0 pointer-events-none;
 }
 .alert-message {
-  @apply text-sm;
+  @apply text-sm text-white;
 }
 </style>

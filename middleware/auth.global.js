@@ -9,7 +9,10 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   if (myAuth.isAuthenticated) {
     // Redirect to the sign-in page if not authenticated and trying to access a protected route
-    return true
+    if(authPaths.includes(to.path.toLowerCase())) {
+      return navigateTo('/');
+    }
+    return
   } 
   if (!myAuth.isAuthenticated) {
     // Redirect to the sign-in page if not authenticated and trying to access a protected route

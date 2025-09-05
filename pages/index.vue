@@ -1,6 +1,20 @@
 <template>
-  <div class="flex flex-col h-screen pl-92 pr-92">
-    <NuxtLayout>
+  <div class="flex flex-col min-h-screen">
+    <NuxtLayout
+      name="main"
+      class="
+        px-4
+        sm:px-8
+        md:px-16
+        lg:px-32
+        xl:px-48
+        2xl:px-16
+        py-4
+        w-full
+        max-w-screen-2xl
+        mx-auto
+      "
+    >
       <HomeHeader />
       <HomeBody />
     </NuxtLayout> 

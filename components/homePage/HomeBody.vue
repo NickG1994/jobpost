@@ -1,12 +1,12 @@
 <template>
-  <div class="flex justify-between items-start bg-base-100 pl-32 pr-32 pt-4 pb-4 gap-8 w-full">
+  <div class="flex flex-col lg:flex-row justify-between items-start bg-base-100 px-4 md:px-16 lg:pl-6 lg:pr-6 pt-4 pb-4 gap-8 w-full">
     <!-- Left: Job Cards -->
-    <div class="left w-1/2">
+    <div class="left w-full lg:w-1/2">
       <div
         v-for="job in jobs"
         :key="job.id"
         @click="selectJob(job)"
-        class="card bg-base-100 w-full shadow-sm cursor-pointer hover:shadow-lg hover:scale-110 transition-transform transition-shadow"
+        class="card bg-base-100 w-full shadow-sm cursor-pointer hover:shadow-lg hover:scale-110 transition-transform transition-shadow mb-4"
       >
         <figure>
           <img
@@ -30,27 +30,27 @@
     </div>
 
     <!-- Right: Detailed Information -->
-    <div class="right w-1/2 bg-base-200 p-6 rounded-lg shadow-md">
+    <div class="right w-full lg:w-1/2 bg-base-200 p-4 md:p-6 rounded-lg shadow-md mt-8 lg:mt-0">
       <div v-if="selectedJob" class="space-y-6">
-        <h2 class="text-3xl font-bold border-b pb-2">{{ selectedJob.title }}</h2>
+        <h2 class="text-2xl md:text-3xl font-bold border-b pb-2">{{ selectedJob.title }}</h2>
         <div class="flex flex-col gap-4">
-          <div class="flex items-start gap-4">
+          <div class="flex flex-col md:flex-row items-start gap-4">
             <span class="font-semibold text-lg">Image:</span>
             <img
               :src="selectedJob.image"
               :alt="selectedJob.title"
-              class="h-48 w-48 object-cover rounded-lg border"
+              class="h-48 w-full md:w-48 object-cover rounded-lg border"
             />
           </div>
-          <div class="flex items-start gap-4">
+          <div class="flex flex-col md:flex-row items-start gap-4">
             <span class="font-semibold text-lg">Description:</span>
             <p class="text-base text-gray-700">{{ selectedJob.description }}</p>
           </div>
-          <div class="flex items-start gap-4">
+          <div class="flex flex-col md:flex-row items-start gap-4">
             <span class="font-semibold text-lg">Location:</span>
             <p class="text-base text-gray-700">{{ selectedJob.location }}</p>
           </div>
-          <div class="flex items-start gap-4">
+          <div class="flex flex-col md:flex-row items-start gap-4">
             <span class="font-semibold text-lg">Job Type:</span>
             <p class="text-base text-gray-700">{{ selectedJob.type }}</p>
           </div>
@@ -107,7 +107,6 @@ const selectJob = (job: any) => {
 </script>
 
 <style scoped>
-/* Add custom styles if needed */
 .right {
   background-color: #f3f4f6; /* Light gray background for better readability */
 }

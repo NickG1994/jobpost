@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-base-100 p-6 xl:pl-92 xl:pr-92 rounded-lg shadow-md">
+  <div class="bg-base-100 p-6 rounded-lg shadow-md">
     <!-- Input Fields -->
     <div class="container flex gap-4">
       <div class="justify-between items-center gap-4 mb-12 w-full input pr-0!">

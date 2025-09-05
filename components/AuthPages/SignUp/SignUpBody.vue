@@ -5,6 +5,8 @@ const myAlertStore = useMyAlertStore();
 import { useMyAuthStore } from '~/store/auth';
 const authStore = useMyAuthStore();
 
+const {isAuthenticated} =storeToRefs(authStore)
+
 const refUsername = ref(null);
 const refEmail = ref(null);
 const refPassword = ref(null);
@@ -46,8 +48,8 @@ const SubmitSignUp = async () => {
       refEmail.value = null;
       refPassword.value = null;
       refAgreement.value = false;
-      $router.push('/');
-
+      isAuthenticated.value = true;
+      navigateTo('/')
 
     } catch (err: any) {
       // Handle fetch/network errors

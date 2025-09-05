@@ -14,10 +14,11 @@ type createUserParams = {
 
 export async function getUserByUsernamePassword(event: H3Event, email: string, password: string): Promise<User | null> {
   try {
-    const users = await query<User>(event, 'SELECT * FROM sec_auth WHERE sec_username = ? and sec_password_hash = ?', [email, password])
+    const users = await query<User>(event, 'SELECT * FROM sec_auth WHERE sec_email = ? and sec_password_hash = ?', [email, password])
     if(users.length > 0) {
       return users[0]
     }
+    console.log(users)
     return null 
   } catch (error) {
     console.error('Error fetching user:', error)
@@ -49,7 +50,7 @@ export async function createUser(
       'CALL Create_New_User(?, ?, ?, ?, CURDATE())',
       [email, username, password, userType]
     )
-
+    console.log(data)
     if (data && data.length > 0 && data[0].length > 0) {
       const user = data[0][0] as createUserParams
       console.log('User created successfully:', user)

@@ -158,7 +158,7 @@ const SubmitSignUp = async () => {
                 <div id="agreement" class="form-group">
                   <label class="label">
                     <input v-model="refAgreement" type="checkbox" checked="checked" class="checkbox" />
-                    <p class="agreement-msg">I have read and agree to the privacy policy and terms.</p>
+                    <p class="agreement-msg text-wrap">I have read and agree to the privacy policy and terms.</p>
                   </label>
                 </div>
             </form>
@@ -211,6 +211,6 @@ const SubmitSignUp = async () => {
   @apply flex flex-col gap-4;
 }
 .agreement-msg {
-  @apply sm:text-sm;
+  @apply sm:text-sm text-xs ml-1;
 }
 </style>

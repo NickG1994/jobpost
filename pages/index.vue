@@ -3,12 +3,12 @@
     <NuxtLayout
       name="main"
       class="
-        px-4
+        px-8
         sm:px-8
         md:px-16
         lg:px-32
-        xl:px-48
-        2xl:px-16
+        xl:px-42
+        2xl:px-64
         py-4
         w-full
         max-w-screen-2xl

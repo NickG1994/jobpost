@@ -13,5 +13,8 @@ export default defineNuxtConfig({
       appName: process.env.NUXT_PUBLIC_APP_NAME || 'My Nuxt App'
     }
   },
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
+  },
   css: ['~/assets/css/app.css'],
 })

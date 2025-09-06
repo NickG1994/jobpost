@@ -11,18 +11,14 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const user = await getUserByUsernamePassword(event, email, password).catch((error) => {
-      
-    });
+    const user = await getUserByUsernamePassword(event, email, password);
 
     if (!user) {
-      console.log('User not found or invalid credentials');
       return createError({
         statusCode: 401,
         statusMessage: 'User not found or invalid credentials',
       });
     }
-    console.log('User found:', user);
     return {
       status: 'success',
       message: 'User authenticated successfully',

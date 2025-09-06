@@ -92,11 +92,11 @@ const submitSignIn = async () => {
     if (refEmail.value && refPassword.value) {
       const response = await authStore.loginAction(refEmail.value, refPassword.value)
       console.log(response?.statusCode)
-      if(response.statusCode === 500) {
-        alertStore.triggerAlert('error', 'Login failed: ' + response.statusMessage, 3000);
+      if(response?.statusCode === 500) {
+        alertStore.triggerAlert('error', 'Login failed: ' + response?.statusMessage, 3000);
       }
-      else if(response.statusCode === 401) {
-        alertStore.triggerAlert('error', 'Login failed: ' + response.statusMessage, 3000);
+      else if(response?.statusCode === 401) {
+        alertStore.triggerAlert('error', 'Login failed: ' + response?.statusMessage, 3000);
       }
       else {
         // Successful login is handled by the watcher above

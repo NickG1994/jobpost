@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col lg:flex-row justify-between items-start bg-base-100 px-4 md:px-16 lg:pl-6 lg:pr-6 pt-4 pb-4 gap-8 w-full">
+  <div class="flex flex-col lg:flex-row justify-between items-start bg-base-100 px-4 gap-8 w-full">
     <!-- Left: Job Cards -->
     <div class="left w-full lg:w-1/2">
       <div

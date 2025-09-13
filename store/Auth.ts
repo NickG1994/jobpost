@@ -8,6 +8,7 @@ export const useMyAuthStore = defineStore('myAuthStore', {
     isAuthenticated: typeof window !== 'undefined' ? useStorage('isAuthenticated', false) : false,
     user: typeof window !== 'undefined' ? useStorage('user', { username: '', password: '' }) : { username: '', password: '' },
     token: typeof window !== 'undefined' ? useStorage<string | null>('token', null) : null,
+    activeRole: typeof window !== 'undefined' ? useStorage<string | null>('activeRole', null) : null,
 
     // Non-persistent state
     isLoading: false,
@@ -18,6 +19,7 @@ export const useMyAuthStore = defineStore('myAuthStore', {
       state.isAuthenticated = useStorage('isAuthenticated', false)
       state.user = useStorage('user', {})
       state.token = useStorage<string | null>('token', null)
+      state.activeRole = useStorage<string | null>('activeRole', null)
     }
   },
 

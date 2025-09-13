@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isAuthenticated" class="pl-32 pr-32">
+  <div v-if="isAuthenticated">
     <div class="navbar bg-base-100 shadow-sm flex justify-between">
       <!-- Logo -->
       <div>
@@ -27,6 +27,7 @@
               </NuxtLink> 
             </li>
             <li><a>Settings</a></li>
+            <li><a>My Company</a></li>
             <li v-on:click="logout"><a>Logout</a></li>
           </ul>
         </div>

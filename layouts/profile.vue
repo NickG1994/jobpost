@@ -1,13 +1,11 @@
 <template>
   <div>
-    <GlobalHeader />
-    <Alert />
+    <GlobalHeader/>
     <slot />
   </div>
 </template>
 
 <script lang="ts" setup>
-import Alert from '../components/Alert-Component.vue';
 import GlobalHeader from '../components/GlobalHeader.vue';
 </script>
 

@@ -1,24 +1,24 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex flex-col items-center">
+  <div class="min-h-screen bg-base-100 flex flex-col items-center">
     <!-- Slim Cover -->
     <div class="w-full h-28 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
 
     <!-- Profile Info -->
     <div class="mt-10 text-center">
-      <h1 class="text-2xl font-bold text-gray-800">{{ user.fullName }}</h1>
-      <p class="text-gray-500">@{{ user.username }}</p>
-      <p class="mt-3 max-w-xl text-gray-600 mx-auto">{{ user.bio }}</p>
+      <h1 class="text-2xl font-bold text-base-content">{{ user.fullName }}</h1>
+      <p class="text-base-content/70">@{{ user.username }}</p>
+      <p class="mt-3 max-w-xl text-base-content/60 mx-auto">{{ user.bio }}</p>
     </div>
 
     <!-- User Details -->
-    <div class="mt-8 max-w-4xl w-full space-y-6">
+    <div class="mt-8 w-full max-w-screen-2xl px-4 sm:px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 space-y-6">
       <!-- Personal Information Card -->
-      <div class="bg-white shadow-md rounded-2xl p-6">
+      <div class="bg-base-200 bg-white shadow-md rounded-2xl p-6 border border-base-300">
         <div class="flex justify-between items-center">
-          <h2 class="text-lg font-semibold text-gray-700">Personal Information</h2>
+          <h2 class="text-lg font-semibold text-base-content">Personal Information</h2>
           <button
             @click="toggleEdit('personal')"
-            class="edit-button"
+            class="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
           >
             {{ editSection === 'personal' ? 'Save' : 'Edit' }}
           </button>
@@ -26,61 +26,61 @@
         <div class="grid sm:grid-cols-2 gap-4 mt-4">
           <!-- First Name -->
           <div>
-            <p class="text-gray-500 text-sm">First Name</p>
-            <p v-if="editSection !== 'personal'" class="font-medium">{{ user.firstName }}</p>
+            <p class="text-base-content/70 text-sm">First Name</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ user.firstName }}</p>
             <input
               v-else
               v-model="user.firstName"
               type="text"
-              class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+              class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
           </div>
 
           <!-- Middle Name -->
           <div>
-            <p class="text-gray-500 text-sm">Middle Name</p>
-            <p v-if="editSection !== 'personal'" class="font-medium">{{ user.middleName }}</p>
+            <p class="text-base-content/70 text-sm">Middle Name</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ user.middleName }}</p>
             <input
               v-else
               v-model="user.middleName"
               type="text"
-              class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+              class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
           </div>
 
           <!-- Last Name -->
           <div>
-            <p class="text-gray-500 text-sm">Last Name</p>
-            <p v-if="editSection !== 'personal'" class="font-medium">{{ user.lastName }}</p>
+            <p class="text-base-content/70 text-sm">Last Name</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ user.lastName }}</p>
             <input
               v-else
               v-model="user.lastName"
               type="text"
-              class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+              class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
           </div>
 
           <!-- Date of Birth -->
           <div>
-            <p class="text-gray-500 text-sm">Date of Birth</p>
-            <p v-if="editSection !== 'personal'" class="font-medium">{{ user.dateOfBirth }}</p>
+            <p class="text-base-content/70 text-sm">Date of Birth</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ user.dateOfBirth }}</p>
             <input
               v-else
               v-model="user.dateOfBirth"
               type="date"
-              class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+              class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
           </div>
         </div>
       </div>
 
       <!-- Contact Information Card -->
-      <div class="bg-white shadow-md rounded-2xl p-6">
+      <div class="bg-base-200 bg-white shadow-md rounded-2xl p-6 border border-base-300">
         <div class="flex justify-between items-center">
-          <h2 class="text-lg font-semibold text-gray-700">Contact Information</h2>
+          <h2 class="text-lg font-semibold text-base-content">Contact Information</h2>
           <button
             @click="toggleEdit('contact')"
-            class="edit-button"
+            class="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
           >
             {{ editSection === 'contact' ? 'Save' : 'Edit' }}
           </button>
@@ -88,74 +88,74 @@
         <div class="grid sm:grid-cols-2 gap-4 mt-4">
           <!-- Personal Email -->
           <div>
-            <p class="text-gray-500 text-sm">Personal Email</p>
-            <p v-if="editSection !== 'contact'" class="font-medium">{{ user.personalEmail }}</p>
+            <p class="text-base-content/70 text-sm">Personal Email</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ user.personalEmail }}</p>
             <input
               v-else
               v-model="user.personalEmail"
               type="email"
-              class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+              class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
           </div>
 
           <!-- Work Email -->
           <div>
-            <p class="text-gray-500 text-sm">Work Email</p>
-            <p v-if="editSection !== 'contact'" class="font-medium">{{ user.workEmail }}</p>
+            <p class="text-base-content/70 text-sm">Work Email</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ user.workEmail }}</p>
             <input
               v-else
               v-model="user.workEmail"
               type="email"
-              class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+              class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
           </div>
 
           <!-- Phone Number -->
           <div>
-            <p class="text-gray-500 text-sm">Phone Number</p>
-            <p v-if="editSection !== 'contact'" class="font-medium">{{ user.phone }}</p>
+            <p class="text-base-content/70 text-sm">Phone Number</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ user.phone }}</p>
             <input
               v-else
               v-model="user.phone"
               type="tel"
-              class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+              class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
           </div>
 
           <!-- Address -->
           <div>
-            <p class="text-gray-500 text-sm">Address</p>
-            <p v-if="editSection !== 'contact'" class="font-medium">{{ user.address }}</p>
+            <p class="text-base-content/70 text-sm">Address</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ user.address }}</p>
             <input
               v-else
               v-model="user.address"
               type="text"
-              class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+              class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
           </div>
         </div>
       </div>
 
       <!-- Security Card -->
-      <div class="bg-white shadow-md rounded-2xl p-6">
+      <div class="bg-base-200 bg-white shadow-md rounded-2xl p-6 border border-base-300">
         <div class="flex justify-between items-center">
-          <h2 class="text-lg font-semibold text-gray-700">Security</h2>
+          <h2 class="text-lg font-semibold text-base-content">Security</h2>
           <button
             @click="toggleEdit('security')"
-            class="edit-button"
+            class="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
           >
             {{ editSection === 'security' ? 'Save' : 'Edit' }}
           </button>
         </div>
         <div class="mt-4">
           <!-- Password -->
-          <p class="text-gray-500 text-sm">Password</p>
-          <p v-if="editSection !== 'security'" class="font-medium">********</p>
+          <p class="text-base-content/70 text-sm">Password</p>
+          <p v-if="editSection !== 'security'" class="font-medium text-base-content">********</p>
           <input
             v-else
             v-model="user.password"
             type="password"
-            class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+            class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
           />
         </div>
       </div>
@@ -195,8 +195,4 @@ function toggleEdit(section: string) {
 </script>
 
 <style scoped>
-@reference "tailwindcss";
-.edit-button {
-  @apply btn btn-outline btn-sm basis-content;
-}
 </style>

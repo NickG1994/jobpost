@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <hr class="border-t-2 border-gray-300 my-4"/>
+    <hr class="border-t-2 border-gray-300 mt-4"/>
   </div>
 </template>
 

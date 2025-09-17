@@ -197,6 +197,6 @@ function toggleEdit(section: string) {
 <style scoped>
 @reference "tailwindcss";
 .edit-button {
-  @apply btn btn-outline btn-sm basis-content;
+
 }
 </style>

@@ -14,7 +14,7 @@ type createUserParams = {
 
 export async function getUserByUsernamePassword(event: H3Event, email: string, password: string): Promise<User | null> {
   try {
-    const users = await query<User>(event, 'SELECT * FROM sec_auth WHERE sec_email = ? and sec_password_hash = ?', [email, password])
+    const users = await query<User>(event, 'SELECT * FROM jobpost.SEC_AUTH WHERE sec_email = ? and sec_password_hash = ?', [email, password])
     if(users.length > 0) {
       return users[0]
     }

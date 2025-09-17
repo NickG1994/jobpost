@@ -58,7 +58,7 @@
       </div>
       <div class="login-bottom">
         <div>
-          <button @click="submitSignIn" :disabled="isLoading" class="btn btn-primary"><span v-if="!isLoading">Sign In</span><span v-else class="loading loading-spinner text-success"></span></button>
+          <button :disabled="isLoading" class="btn btn-primary" @click="submitSignIn" ><span v-if="!isLoading">Sign In</span><span v-else class="loading loading-spinner text-success"></span></button>
         </div>
         <p>Don't have an account? <NuxtLink to="/auth/SignUp">Sign Up</NuxtLink></p>
       </div>

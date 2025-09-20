@@ -30,11 +30,18 @@ const SubmitSignUp = async () => {
     }
 
     try {
+      console.log({
+        email: refEmail.value,
+        username: isEmployer.value ? refCompanyName.value : refUsername.value,
+        password: refPassword.value,
+        userType: isEmployer.value ? 'employer' : 'JobSeeker'
+      });
+      
       const response = await authStore.signUp(
         refEmail.value,
         isEmployer.value ? refCompanyName.value : refUsername.value,
         refPassword.value,
-        isEmployer.value ? 'employer' : 'user'
+        isEmployer.value ? 'employer' : 'JobSeeker'
       );
 
       if (response.status === 'error' || response.statusCode >= 400) {

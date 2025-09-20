@@ -12,14 +12,31 @@ type createUserParams = {
   password: string
 }
 
-export async function getUserByUsernamePassword(event: H3Event, email: string, password: string): Promise<User | null> {
+export async function getUserByUsernamePassword(
+  event: H3Event,
+  email: string,
+  password: string
+): Promise<User | null> {
   try {
-    const users = await query<User>(event, 'SELECT * FROM sec_auth WHERE sec_email = ? and sec_password_hash = ?', [email, password])
-    if(users.length > 0) {
+    const users = await query<User>(
+      event,
+      `SELECT 
+         sa.auth_id,
+         sa.sec_email,
+         sa.sec_username,
+         sa.sec_password_hash,
+         rl.role_id,
+         rl.role_name
+       FROM jobpost.SEC_AUTH sa
+       LEFT JOIN jobpost.USR_PERSONS per ON per.persons_id = sa.auth_id
+       LEFT JOIN jobpost.USR_ROLES rl ON rl.persons_id = per.persons_id
+       WHERE sa.sec_email = ? AND sa.sec_password_hash = ?`,
+      [email, password]
+    )
+    if (users.length > 0) {
       return users[0]
     }
-    console.log(users)
-    return null 
+    return null
   } catch (error) {
     console.error('Error fetching user:', error)
     // You can throw an error or return null based on your error handling strategy
@@ -50,10 +67,8 @@ export async function createUser(
       'CALL Create_New_User(?, ?, ?, ?, CURDATE())',
       [email, username, password, userType]
     )
-    console.log(data)
     if (data && data.length > 0 && data[0].length > 0) {
       const user = data[0][0] as createUserParams
-      console.log('User created successfully:', user)
       return user
     } else {
       throw createError({

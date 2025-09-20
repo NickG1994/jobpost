@@ -5,23 +5,33 @@ export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
     const { email, username, password, userType } = body;
-    
-    if (!email || !password || !username || userType) {
+    if (!email) {
       return createError({
         statusCode: 400,
-        statusMessage: 'Email and password are required',
+        statusMessage: 'Email is required',
       });
     }
-
-    if(userType === 'employer') {
+    if (!username) {
       return createError({
         statusCode: 400,
-        statusMessage: 'Use the /api/auth/create-employer endpoint to create an employer',
+        statusMessage: 'Username is required',
       });
-    }  
-
+    }
+    if (!password) {
+      return createError({
+        statusCode: 400,
+        statusMessage: 'Password is required',
+      });
+    }
+    if (!userType) {
+      return createError({
+        statusCode: 400,
+        statusMessage: 'User type is required',
+      });
+    }
+    console.log('Received sign-up request:', { email, username, password, userType });
     const response = await createUser(event, email, username, password, userType);
-    console.log('User creation response:', response);
+    console.log('User created successfully:', response);
     return response 
     
   } catch (error: any) {

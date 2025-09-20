@@ -31,9 +31,16 @@ export const useMyAuthStore = defineStore('myAuthStore', {
         console.log(result)
         if (import.meta.client) {
           if (result.status === 'success' && result.user) {
-            this.user = result.user
+            this.user = {
+              id: result.user.id,
+              email: result.user.email,
+              username: result.user.username,
+              userType: result.user.role_name,
+              // ...add other fields if needed
+            }
             this.isAuthenticated = true
             this.token = result.user.token || null
+            this.activeRole = result.user.role_name
             this.error = null
             console.log('Login successful:', result.user)
           } else {
@@ -86,9 +93,10 @@ export const useMyAuthStore = defineStore('myAuthStore', {
 
     async signUp(email: string, username: string, password: string, userType: string) {
       try {
-        if (!email || !username || !password) {
-          throw new Error('Email, username, and password are required')
-        }
+        if (!email) throw new Error('Email is required')
+        if (!username) throw new Error('Username is required')
+        if (!password) throw new Error('Password is required')
+        if (!userType) throw new Error('User type is required')
 
         const response = await $fetch('/api/auth/create-user', {
           method: 'POST',
@@ -96,12 +104,23 @@ export const useMyAuthStore = defineStore('myAuthStore', {
           body: JSON.stringify({ email, username, password, userType }),
         })
 
-        return response        
+        // Store user info in Pinia
+        if (response && response.id) {
+          this.user = {
+            id: response.id,
+            email: response.email,
+            username: response.username,
+            userType: response.userType,
+          }
+          this.isAuthenticated = true
+          this.activeRole = response.userType
+        }
+
+        return response
       } catch (error) {
         console.error('Sign up failed:', error)
         throw new Error('Sign up failed: ' + error.message)
       }
-
     },
   },
 })

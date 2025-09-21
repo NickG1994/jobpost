@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const user = await getUserByUsernamePassword(event, email, password);
-
+    console.log('Retrieved user:', user);
     if (!user) {
       return createError({
         statusCode: 401,
@@ -23,8 +23,10 @@ export default defineEventHandler(async (event) => {
       status: 'success',
       message: 'User authenticated successfully',
       user: {
-        username: user.sec_username,
-        email: user.sec_email
+        id: user.ID,
+        email: user.email,
+        username: user.username,
+        role: user.role
       }
     };
 

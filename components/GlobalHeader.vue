@@ -8,8 +8,8 @@
 
       <!-- Profile Dropdown -->
       <div class="flex gap-2">
-        <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <div class="max-sm:dropdown max-sm:dropdown-end sm:flex sm:flex-row-reverse sm:items-center">
+          <div tabindex="0" role="button" class="max-sm:btn max-sm:btn-ghost max-sm:btn-circle avatar">
             <div class="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
@@ -19,7 +19,7 @@
           </div>
           <ul
             tabindex="0"
-            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
+            class="menu menu-sm dropdown-content md:dropdown-open bg-base-100 rounded-box z-10 mt-3 max-sm:w-52 p-2 shadow sm:flex sm:flex-row sm:gap-2 sm:items-center sm:width-fit sm:block" 
           >
             <li>
               <NuxtLink to="Dashboard" class="justify-between">

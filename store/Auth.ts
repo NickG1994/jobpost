@@ -26,40 +26,42 @@ export const useMyAuthStore = defineStore('myAuthStore', {
   actions: {
     async loginAction(email: string, password: string) {
       try {
-        this.isLoading = true
-        const result = await this.checkUserExist(email, password)
-        console.log(result)
+        this.isLoading = true;
+        console.log(this.isLoading)
+        const result = await this.checkUserExist(email, password);
+
         if (import.meta.client) {
           if (result.status === 'success' && result.user) {
             this.user = {
               id: result.user.id,
               email: result.user.email,
               username: result.user.username,
-              userType: result.user.role_name,
-              // ...add other fields if needed
-            }
-            this.isAuthenticated = true
-            this.token = result.user.token || null
-            this.activeRole = result.user.role_name
-            this.error = null
-            console.log('Login successful:', result.user)
+              userType: result.user.role,
+            };
+            this.isAuthenticated = true;
+            this.token = result.user.token || null;
+            this.activeRole = result.user.role_name;
+            this.error = null;
+            console.log('Login successful:', result.user);
           } else {
-            this.error = result.message || 'Invalid email or password'
-            this.isAuthenticated = false
-            this.user = { username: '', password: '' }
-            this.token = null
-            return createError({ statusCode: 401, statusMessage: this.error })
+            this.error = result.message || 'Invalid email or password';
+            this.isAuthenticated = false;
+            this.user = { username: '', password: '' };
+            this.token = null;
+            return createError({ statusCode: 401, statusMessage: this.error });
           }
         }
       } catch (err: any) {
-        console.error('Login failed:', err)
-        this.error = err.message
-        this.isAuthenticated = false
-        this.user = { username: '', password: '' }
-        this.token = null
-        return createError({ statusCode: 500, statusMessage: err.message })
+        console.error('Login failed:', err);
+        this.error = err.message;
+        this.isAuthenticated = false;
+        this.user = { username: '', password: '' };
+        this.token = null;
+        return createError({ statusCode: 500, statusMessage: err.message });
       } finally {
-        this.isLoading = false
+        // Ensure isLoading is set to false regardless of success or failure
+        this.isLoading = false;
+        console.log(this.isLoading)
       }
     },
 

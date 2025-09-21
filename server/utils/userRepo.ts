@@ -18,27 +18,30 @@ export async function getUserByUsernamePassword(
   password: string
 ): Promise<User | null> {
   try {
+    console.log('Fetching user with email:', email)
+    console.log('Using password:', password)
     const users = await query<User>(
       event,
       `SELECT 
-         sa.auth_id,
-         sa.sec_email,
-         sa.sec_username,
-         sa.sec_password_hash,
+         sa.auth_id as ID,
+         sa.sec_email as email,
+         sa.sec_username as username,
+         sa.sec_password_hash as password,
          rl.role_id,
-         rl.role_name
+         rl.role_name as role
        FROM jobpost.SEC_AUTH sa
        LEFT JOIN jobpost.USR_PERSONS per ON per.persons_id = sa.auth_id
        LEFT JOIN jobpost.USR_ROLES rl ON rl.persons_id = per.persons_id
        WHERE sa.sec_email = ? AND sa.sec_password_hash = ?`,
       [email, password]
     )
+    console.log('Query result:', users)
     if (users.length > 0) {
       return users[0]
     }
     return null
   } catch (error) {
-    console.error('Error fetching user:', error)
+    console.error('Error fetching user:', error.message, error)
     // You can throw an error or return null based on your error handling strategy
     return null
   }
@@ -67,6 +70,7 @@ export async function createUser(
       'CALL Create_New_User(?, ?, ?, ?, CURDATE())',
       [email, username, password, userType]
     )
+    console.log('Stored procedure result:', data)
     if (data && data.length > 0 && data[0].length > 0) {
       const user = data[0][0] as createUserParams
       return user

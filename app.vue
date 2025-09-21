@@ -5,6 +5,7 @@
     <NuxtLayout
       name="main"
       class="
+      mt-6
         px-8
         sm:px-8
         md:px-16

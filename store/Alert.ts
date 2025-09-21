@@ -39,8 +39,8 @@ export const useMyAlertStore = defineStore('myAlertStore',{
      * @param ms - The time in milliseconds after which the alert will hide (default is 5000ms)
      */
     triggerAlert(type: string, message: string, ms: number = this.milisecond) {
-      console.log(`Triggering alert of type ${type} with message: "${message}" for ${ms} milliseconds`)
-      console.log('alert type:', type)
+      //console.log(`Triggering alert of type ${type} with message: "${message}" for ${ms} milliseconds`)
+      //console.log('alert type:', type)
       this.hideAlert()
       this.showAlert(type, message)
       if(this.timerReference) {

@@ -112,3 +112,40 @@ export async function createUser(
   }
 }
 
+export async function getProfileData(event: H3Event, userId: number) {
+  try{
+    const profiles = await query(
+      event,
+      `select auth_id,
+       	      auth.sec_username,
+              auth.sec_password_hash,
+              auth.sec_email_verified,
+              auth.sec_email,
+              auth.sec_mfa_enabled,
+              auth.sec_account_verified,
+              persons.first_name,
+              persons.last_name,
+              persons.middle_name,
+              persons.address,
+              persons.phone_number,
+              persons.personal_email,
+              persons.location
+       from jobpost.SEC_AUTH AS auth
+       LEFT JOIN  jobpost.USR_PERSONS AS persons ON persons.persons_id = auth.auth_id;`,
+      [userId]
+    )
+    if (profiles.length > 0) {
+      return profiles[0]
+    }
+    return null
+  }catch(error){
+    console.error('Error fetching profile data:', error)
+    return createError({
+      statusCode: 500,
+      statusMessage: 'Internal Server Error',
+      message: error.message || 'An unexpected error occurred',
+    })
+  }
+}
+
+

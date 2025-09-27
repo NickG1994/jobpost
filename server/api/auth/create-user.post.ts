@@ -29,11 +29,11 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'User type is required',
       });
     }
-    console.log('Received sign-up request:', { email, username, password, userType });
+    //console.log('Received sign-up request:', { email, username, password, userType });
     const response = await createUser(event, email, username, password, userType);
-    console.log('User created successfully:', response);
-    return response 
-    
+    //console.log('User created successfully:', response);
+    return response;
+
   } catch (error: any) {
     console.error('Error during user authentication:', error);
     return createError({

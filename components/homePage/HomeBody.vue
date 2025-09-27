@@ -6,7 +6,7 @@
         v-for="job in jobs"
         :key="job.id"
         @click="selectJob(job)"
-        class="card bg-base-100 w-full shadow-sm cursor-pointer hover:shadow-lg hover:scale-110 transition-transform transition-shadow mb-4"
+        class="card bg-base-100 w-full shadow-sm cursor-pointer hover:shadow-lg hover:outline-2 hover:outline-offset-2 hover:outline-blue-700  transition-all transition-outline mb-4"
       >
         <figure>
           <img
@@ -47,12 +47,11 @@
       <div v-if="selectedJob" class="space-y-6">
         <h2 class="text-2xl md:text-3xl font-bold border-b pb-2">{{ selectedJob.title }}</h2>
         <div class="flex flex-col gap-4">
-          <div class="flex flex-col md:flex-row items-start gap-4">
-            <span class="font-semibold text-lg">Image:</span>
+          <div class="w-full">
             <img
               :src="selectedJob.image"
               :alt="selectedJob.title"
-              class="h-48 w-full md:w-48 object-cover rounded-lg border"
+              class="h-48 w-full object-cover rounded-lg border"
             />
           </div>
           <div class="flex flex-col md:flex-row items-start gap-4">

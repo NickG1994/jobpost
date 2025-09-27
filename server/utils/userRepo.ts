@@ -18,8 +18,8 @@ export async function getUserByUsernamePassword(
   password: string
 ): Promise<User | null> {
   try {
-    console.log('Fetching user with email:', email)
-    console.log('Using password:', password)
+    //console.log('Fetching user with email:', email)
+    //console.log('Using password:', password)
     const users = await query<User>(
       event,
       `SELECT 
@@ -70,7 +70,7 @@ export async function createUser(
       'CALL Create_New_User(?, ?, ?, ?, CURDATE())',
       [email, username, password, userType]
     )
-    console.log('Stored procedure result:', data)
+
     if (data && data.length > 0 && data[0].length > 0) {
       const user = data[0][0] as createUserParams
       return user
@@ -87,7 +87,7 @@ export async function createUser(
     // Handle MySQL duplicate entry (unique constraint violation)
     if (error.code === 'ER_DUP_ENTRY' || error.errno === 1062) {
       let field = 'field'
-      if (error.sqlMessage?.includes('sec_email_UNIQUE')) field = 'email'
+      //if (error.sqlMessage?.includes('sec_email_UNIQUE')) field = 'email'
       if (error.sqlMessage?.includes('sec_username_UNIQUE')) field = 'username'
       if (error.sqlMessage?.includes('sec_password_hash_UNIQUE')) field = 'password'
 
@@ -111,41 +111,4 @@ export async function createUser(
     })
   }
 }
-
-export async function getProfileData(event: H3Event, userId: number) {
-  try{
-    const profiles = await query(
-      event,
-      `select auth_id,
-       	      auth.sec_username,
-              auth.sec_password_hash,
-              auth.sec_email_verified,
-              auth.sec_email,
-              auth.sec_mfa_enabled,
-              auth.sec_account_verified,
-              persons.first_name,
-              persons.last_name,
-              persons.middle_name,
-              persons.address,
-              persons.phone_number,
-              persons.personal_email,
-              persons.location
-       from jobpost.SEC_AUTH AS auth
-       LEFT JOIN  jobpost.USR_PERSONS AS persons ON persons.persons_id = auth.auth_id;`,
-      [userId]
-    )
-    if (profiles.length > 0) {
-      return profiles[0]
-    }
-    return null
-  }catch(error){
-    console.error('Error fetching profile data:', error)
-    return createError({
-      statusCode: 500,
-      statusMessage: 'Internal Server Error',
-      message: error.message || 'An unexpected error occurred',
-    })
-  }
-}
-
 

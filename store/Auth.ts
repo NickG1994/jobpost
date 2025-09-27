@@ -107,15 +107,15 @@ export const useMyAuthStore = defineStore('myAuthStore', {
         })
 
         // Store user info in Pinia
-        if (response && response.id) {
+        if (response && response.ID) {
           this.user = {
-            id: response.id,
+            id: response.ID,
             email: response.email,
             username: response.username,
-            userType: response.userType,
+            userType: response.role,
           }
           this.isAuthenticated = true
-          this.activeRole = response.userType
+          this.activeRole = response.role
         }
 
         return response

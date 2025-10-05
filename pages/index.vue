@@ -11,7 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import HomeBody from '../components/homePage/HomeBody.vue';
 import HomeHeader from '../components/homePage/HomeHead.vue';

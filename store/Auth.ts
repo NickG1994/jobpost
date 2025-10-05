@@ -32,6 +32,7 @@ export const useMyAuthStore = defineStore('myAuthStore', {
 
         if (import.meta.client) {
           if (result.status === 'success' && result.user) {
+            console.log('User data from login:', result.user);
             this.user = {
               id: result.user.id,
               email: result.user.email,

@@ -11,7 +11,6 @@
 import  {useMyAlertStore} from '~/store/Alert';
 const myAlertStore = useMyAlertStore();
 const {alert} = storeToRefs(myAlertStore);
-console.log('Alert component initialized with alert:', alert, 'and type:', alert.type);
 </script>
 
 <style scoped>

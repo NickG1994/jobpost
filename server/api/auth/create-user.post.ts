@@ -1,5 +1,8 @@
 import { readBody, createError, defineEventHandler } from 'h3'
 import {createUser} from '../../utils/userRepo'
+import { useAuthUtils } from '~/composables/useAuthUtils';
+const useAuth = useAuthUtils();
+const { bcrypt_hash_password } = useAuth;
 
 export default defineEventHandler(async (event) => {
   try {
@@ -29,8 +32,13 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'User type is required',
       });
     }
+    const hash_password = bcrypt_hash_password(password);
+    console.log('Hashed password:', hash_password);
+    // Use the hashed password for user creation
+    // Here, you would typically save the user to your database
+    // For demonstration, we'll just return a success message
     //console.log('Received sign-up request:', { email, username, password, userType });
-    const response = await createUser(event, email, username, password, userType);
+    const response = await createUser(event, email, username, hash_password, userType);
     //console.log('User created successfully:', response);
     return response;
 

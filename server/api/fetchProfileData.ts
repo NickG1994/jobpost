@@ -1,15 +1,12 @@
-import { getProfileData } from "../utils/userRepo"
+import { getUserProfileData } from "../utils/userRepo"
 export default defineEventHandler(async (event) => {
-  return 'nitro server is running'
-  //try {
-  //  const { userId } = event.context.params
-  //  const profileData = await getProfileData(event, Number(userId))
-  //  if(!profileData) {
-  //    return createError({ statusCode: 404, statusMessage: 'Profile Not Found' })
-  //  }
-  //  return profileData
-  //} catch (error) {
-  //  console.error('Error fetching profile data:', error)
-  //  return createError({ statusCode: 500, statusMessage: 'Internal Server Error' })
-  //}
+  try {
+    const { userId } = readBody(event)
+    const profileData = await getUserProfileData(event, Number(userId))
+    console.log('Profile Data:', profileData)
+    return !profileData? createError({ statusCode: 404, statusMessage: 'Profile Not Found' }) : profileData
+  } catch (error) {
+    console.error('Error fetching profile data:', error)
+    return createError({ statusCode: 500, statusMessage: 'Internal Server Error' })
+  }
 })

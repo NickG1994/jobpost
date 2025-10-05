@@ -1,5 +1,7 @@
 import { query } from './db'
 import { H3Event } from 'h3'
+import {useAuthUtils} from "../../composables/useAuthUtils"
+const { bcrypt_verify_password } = useAuthUtils();
 
 type User = {
   id: number
@@ -18,12 +20,37 @@ export async function getUserByUsernamePassword(
   password: string
 ): Promise<User | null> {
   try {
-    //console.log('Fetching user with email:', email)
-    //console.log('Using password:', password)
+    // Get user by email
+    const userRows = await query(
+      event,
+      'SELECT sec_password_hash FROM jobpost.SEC_AUTH WHERE sec_email = ?',
+      [email]
+    )
+
+    if (userRows.length === 0) {
+      console.log('No user found with the provided email.')
+      return createError({
+        statusCode: 401,
+        statusMessage: 'User not found or invalid credentials',
+        message: 'No user found with the provided email.',
+      })
+    } else {
+      const hashedPassword = userRows[0].sec_password_hash;
+      // Now compare the plain password with the hash
+      if (!bcrypt_verify_password(password, hashedPassword)) {
+        return createError({
+          statusCode: 401,
+          statusMessage: 'User not found or invalid credentials',
+          message: 'Invalid password.',
+        })
+      }
+    }
+
+    // Now fetch the full user info
     const users = await query<User>(
       event,
       `SELECT 
-         sa.auth_id as ID,
+         sa.auth_id as id,
          sa.sec_email as email,
          sa.sec_username as username,
          sa.sec_password_hash as password,
@@ -32,17 +59,15 @@ export async function getUserByUsernamePassword(
        FROM jobpost.SEC_AUTH sa
        LEFT JOIN jobpost.USR_PERSONS per ON per.persons_id = sa.auth_id
        LEFT JOIN jobpost.USR_ROLES rl ON rl.persons_id = per.persons_id
-       WHERE sa.sec_email = ? AND sa.sec_password_hash = ?`,
-      [email, password]
+       WHERE sa.sec_email = ?`,
+      [email]
     )
-    console.log('Query result:', users)
     if (users.length > 0) {
       return users[0]
     }
     return null
   } catch (error) {
     console.error('Error fetching user:', error.message, error)
-    // You can throw an error or return null based on your error handling strategy
     return null
   }
 }
@@ -112,3 +137,27 @@ export async function createUser(
   }
 }
 
+export async function getUserProfileData(event: H3Event, userId: number) {
+  try {
+    const profileData = await query(event, `
+      SELECT 
+        per.persons_id AS userId,
+        per.sec_first_name AS firstName,
+        per.sec_last_name AS lastName,
+        per.sec_phone AS phone,
+        per.sec_address AS address,
+        sa.sec_email AS email,
+        rl.role_name AS role
+      FROM jobpost.USR_PERSONS per
+      LEFT JOIN jobpost.SEC_AUTH sa ON sa.auth_id = per.persons_id
+      LEFT JOIN jobpost.USR_ROLES rl ON rl.persons_id = per.persons_id
+      WHERE per.persons_id = ?
+    `, [userId])
+      console.log('Fetched profile data:', profileData)
+    return profileData.length > 0 ? profileData[0] : createError('User profile not found', 404)
+  } catch (error) {
+    console.error('Error fetching user profile data:', error)
+    return createError('Internal Server Error', 500)
+  }
+
+ }

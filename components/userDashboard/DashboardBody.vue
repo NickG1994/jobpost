@@ -5,9 +5,9 @@
 
     <!-- Profile Info -->
     <div class="mt-10 text-center">
-      <h1 class="text-2xl font-bold text-base-content">{{ user.fullName }}</h1>
-      <p class="text-base-content/70">@{{ user.username }}</p>
-      <p class="mt-3 max-w-xl text-base-content/60 mx-auto">{{ user.bio }}</p>
+      <h1 class="text-2xl font-bold text-base-content">{{ userRef.fullName }}</h1>
+      <p class="text-base-content/70">@{{ userRef.username }}</p>
+      <p class="mt-3 max-w-xl text-base-content/60 mx-auto">{{ userRef.bio }}</p>
     </div>
 
     <!-- User Details -->
@@ -27,10 +27,10 @@
           <!-- First Name -->
           <div>
             <p class="text-base-content/70 text-sm">First Name</p>
-            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ user.firstName }}</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userRef.firstName }}</p>
             <input
               v-else
-              v-model="user.firstName"
+              v-model="userRef.firstName"
               type="text"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -39,10 +39,10 @@
           <!-- Middle Name -->
           <div>
             <p class="text-base-content/70 text-sm">Middle Name</p>
-            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ user.middleName }}</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userRef.middleName }}</p>
             <input
               v-else
-              v-model="user.middleName"
+              v-model="userRef.middleName"
               type="text"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -51,10 +51,10 @@
           <!-- Last Name -->
           <div>
             <p class="text-base-content/70 text-sm">Last Name</p>
-            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ user.lastName }}</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userRef.lastName }}</p>
             <input
               v-else
-              v-model="user.lastName"
+              v-model="userRef.lastName"
               type="text"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -63,10 +63,10 @@
           <!-- Date of Birth -->
           <div>
             <p class="text-base-content/70 text-sm">Date of Birth</p>
-            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ user.dateOfBirth }}</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userRef.dateOfBirth }}</p>
             <input
               v-else
-              v-model="user.dateOfBirth"
+              v-model="userRef.dateOfBirth"
               type="date"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -89,10 +89,10 @@
           <!-- Personal Email -->
           <div>
             <p class="text-base-content/70 text-sm">Personal Email</p>
-            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ user.personalEmail }}</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userRef.personalEmail }}</p>
             <input
               v-else
-              v-model="user.personalEmail"
+              v-model="userRef.personalEmail"
               type="email"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -101,10 +101,10 @@
           <!-- Work Email -->
           <div>
             <p class="text-base-content/70 text-sm">Work Email</p>
-            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ user.workEmail }}</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userRef.workEmail }}</p>
             <input
               v-else
-              v-model="user.workEmail"
+              v-model="userRef.workEmail"
               type="email"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -113,10 +113,10 @@
           <!-- Phone Number -->
           <div>
             <p class="text-base-content/70 text-sm">Phone Number</p>
-            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ user.phone }}</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userRef.phone }}</p>
             <input
               v-else
-              v-model="user.phone"
+              v-model="userRef.phone"
               type="tel"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -125,10 +125,10 @@
           <!-- Address -->
           <div>
             <p class="text-base-content/70 text-sm">Address</p>
-            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ user.address }}</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userRef.address }}</p>
             <input
               v-else
-              v-model="user.address"
+              v-model="userRef.address"
               type="text"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -153,7 +153,7 @@
           <p v-if="editSection !== 'security'" class="font-medium text-base-content">********</p>
           <input
             v-else
-            v-model="user.password"
+            v-model="userRef.password"
             type="password"
             class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
           />
@@ -164,23 +164,64 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useMyAuthStore } from "~/store/Auth";
+const myAuthStore = useMyAuthStore();
+
+const { user } = storeToRefs(myAuthStore);
 
 const editSection = ref<string | null>(null);
 
-const user = ref({
-  firstName: "John",
-  middleName: "Michael",
-  lastName: "Doe",
-  username: "john_doe",
-  password: "password123",
-  dateOfBirth: "1990-01-01",
-  address: "123 Main St, Austin, TX",
-  phone: "+1 234 567 890",
-  personalEmail: "john.personal@example.com",
-  workEmail: "john.work@example.com",
-  location: "Austin, TX",
-  bio: "Full-stack developer. Coffee enthusiast ☕ | Sharing code and ideas.",
+// Use a single userRef object for all fields
+const userRef = ref({
+  fullName: "",
+  firstName: "te",
+  middleName: "",
+  lastName: "",
+  username: "",
+  password: "",
+  dateOfBirth: "",
+  address: "",
+  phone: "",
+  personalEmail: "",
+  workEmail: "",
+  location: "",
+  bio: "",
+});
+
+onMounted(async () => {
+  try {
+    // Use the actual user ID from the store
+    const userId = user.value?.id;
+    console.log('Pinia user:', user.value); // <--- Add this
+    if (!userId) return;
+    const response = await $fetch('/api/fetchProfileData', {
+      method: 'POST',
+      body: { user: userId }
+    });
+    console.log('Raw Response:', response);
+    // Map response to userRef fields
+    if (response) { 
+      userRef.value = {
+        fullName: `${response.firstName || ""} ${response.middleName || ""} ${response.lastName || ""}`.trim(),
+        firstName: response.firstName || "",
+        middleName: response.middleName || "",
+        lastName: response.lastName || "",
+        username: response.username || "",
+        password: "", // Never fill password from backend
+        dateOfBirth: response.dateOfBirth || "",
+        address: response.address || "",
+        phone: response.phone || "",
+        personalEmail: response.email || "",
+        workEmail: response.workEmail || "",
+        location: response.location || "",
+        bio: response.bio || "",
+      };
+    }
+    console.log('Profile Data:', response);
+  } catch (error) {
+    console.error('Error fetching profile data:', error);
+  }
 });
 
 function toggleEdit(section: string) {

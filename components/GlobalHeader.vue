@@ -27,7 +27,7 @@
               </NuxtLink> 
             </li>
             <li><a>Settings</a></li>
-            <li><a>My Company</a></li>
+            <li v-if="user.userType === 'employer'"><a>My Company</a></li>
             <li v-on:click="logout"><a>Logout</a></li>
           </ul>
         </div>
@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import { useMyAuthStore } from '~/store/Auth';
 const authStore = useMyAuthStore();
-const { isAuthenticated } = storeToRefs(authStore);
+const { isAuthenticated, user } = storeToRefs(authStore);
 
 const logout = async () => {
   await authStore.logoutAction();

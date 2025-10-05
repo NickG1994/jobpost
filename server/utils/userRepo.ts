@@ -140,17 +140,20 @@ export async function createUser(
 export async function getUserProfileData(event: H3Event, userId: number) {
   try {
     const profileData = await query(event, `
-      SELECT 
-        per.persons_id AS userId,
-        per.sec_first_name AS firstName,
-        per.sec_last_name AS lastName,
-        per.sec_phone AS phone,
-        per.sec_address AS address,
-        sa.sec_email AS email,
-        rl.role_name AS role
+      select per.persons_id,
+      	   per.first_name,
+             per.last_name,
+             per.middle_name,
+             per.date_of_birth,
+             per.address,
+             per.phone_number,
+             sa.sec_username,
+             sa.sec_password_hash,
+             sa.sec_email,
+             r.role_name
       FROM jobpost.USR_PERSONS per
-      LEFT JOIN jobpost.SEC_AUTH sa ON sa.auth_id = per.persons_id
-      LEFT JOIN jobpost.USR_ROLES rl ON rl.persons_id = per.persons_id
+      LEFT JOIN jobpost.SEC_AUTH sa ON per.persons_id = sa.auth_id
+      LEFT JOIN jobpost.USR_ROLES r ON per.persons_id = r.persons_id 
       WHERE per.persons_id = ?
     `, [userId])
       console.log('Fetched profile data:', profileData)

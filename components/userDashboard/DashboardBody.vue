@@ -5,9 +5,9 @@
 
     <!-- Profile Info -->
     <div class="mt-10 text-center">
-      <h1 class="text-2xl font-bold text-base-content">{{ userRef.fullName }}</h1>
-      <p class="text-base-content/70">@{{ userRef.username }}</p>
-      <p class="mt-3 max-w-xl text-base-content/60 mx-auto">{{ userRef.bio }}</p>
+      <h1 class="text-2xl font-bold text-base-content">{{ userData.fullName }}</h1>
+      <p class="text-base-content/70">@{{ userData.username }}</p>
+      <p class="mt-3 max-w-xl text-base-content/60 mx-auto">{{ userData.bio }}</p>
     </div>
 
     <!-- User Details -->
@@ -27,10 +27,10 @@
           <!-- First Name -->
           <div>
             <p class="text-base-content/70 text-sm">First Name</p>
-            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userRef.firstName }}</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userData.firstName }}</p>
             <input
               v-else
-              v-model="userRef.firstName"
+              v-model="userData.firstName"
               type="text"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -39,10 +39,10 @@
           <!-- Middle Name -->
           <div>
             <p class="text-base-content/70 text-sm">Middle Name</p>
-            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userRef.middleName }}</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userData.middleName }}</p>
             <input
               v-else
-              v-model="userRef.middleName"
+              v-model="userData.middleName"
               type="text"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -51,10 +51,10 @@
           <!-- Last Name -->
           <div>
             <p class="text-base-content/70 text-sm">Last Name</p>
-            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userRef.lastName }}</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userData.lastName }}</p>
             <input
               v-else
-              v-model="userRef.lastName"
+              v-model="userData.lastName"
               type="text"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -63,10 +63,10 @@
           <!-- Date of Birth -->
           <div>
             <p class="text-base-content/70 text-sm">Date of Birth</p>
-            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userRef.dateOfBirth }}</p>
+            <p v-if="editSection !== 'personal'" class="font-medium text-base-content">{{ userData.dateOfBirth }}</p>
             <input
               v-else
-              v-model="userRef.dateOfBirth"
+              v-model="userData.dateOfBirth"
               type="date"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -89,10 +89,10 @@
           <!-- Personal Email -->
           <div>
             <p class="text-base-content/70 text-sm">Personal Email</p>
-            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userRef.personalEmail }}</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userData.personalEmail }}</p>
             <input
               v-else
-              v-model="userRef.personalEmail"
+              v-model="userData.personalEmail"
               type="email"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -101,10 +101,10 @@
           <!-- Work Email -->
           <div>
             <p class="text-base-content/70 text-sm">Work Email</p>
-            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userRef.workEmail }}</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userData.workEmail }}</p>
             <input
               v-else
-              v-model="userRef.workEmail"
+              v-model="userData.workEmail"
               type="email"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -113,10 +113,10 @@
           <!-- Phone Number -->
           <div>
             <p class="text-base-content/70 text-sm">Phone Number</p>
-            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userRef.phone }}</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userData.phone }}</p>
             <input
               v-else
-              v-model="userRef.phone"
+              v-model="userData.phone"
               type="tel"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -125,10 +125,10 @@
           <!-- Address -->
           <div>
             <p class="text-base-content/70 text-sm">Address</p>
-            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userRef.address }}</p>
+            <p v-if="editSection !== 'contact'" class="font-medium text-base-content">{{ userData.address }}</p>
             <input
               v-else
-              v-model="userRef.address"
+              v-model="userData.address"
               type="text"
               class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
             />
@@ -153,7 +153,7 @@
           <p v-if="editSection !== 'security'" class="font-medium text-base-content">********</p>
           <input
             v-else
-            v-model="userRef.password"
+            v-model="userData.password"
             type="password"
             class="w-full border border-base-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-base-100 text-base-content"
           />
@@ -166,16 +166,13 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { useMyAuthStore } from "~/store/Auth";
-const myAuthStore = useMyAuthStore();
 
-const { user } = storeToRefs(myAuthStore);
-
+const authStore = useMyAuthStore();
+const { user } = storeToRefs(authStore);
 const editSection = ref<string | null>(null);
 
-// Use a single userRef object for all fields
-const userRef = ref({
-  fullName: "",
-  firstName: "te",
+const userData = ref({
+  firstName: "",
   middleName: "",
   lastName: "",
   username: "",
@@ -186,53 +183,63 @@ const userRef = ref({
   personalEmail: "",
   workEmail: "",
   location: "",
-  bio: "",
+  bio: "Full-stack developer. Coffee enthusiast ☕ | Sharing code and ideas.",
 });
 
-onMounted(async () => {
-  try {
-    // Use the actual user ID from the store
-    const userId = user.value?.id;
-    console.log('Pinia user:', user.value); // <--- Add this
-    if (!userId) return;
-    const response = await $fetch('/api/fetchProfileData', {
-      method: 'POST',
-      body: { user: userId }
-    });
-    console.log('Raw Response:', response);
-    // Map response to userRef fields
-    if (response) { 
-      userRef.value = {
-        fullName: `${response.firstName || ""} ${response.middleName || ""} ${response.lastName || ""}`.trim(),
-        firstName: response.firstName || "",
-        middleName: response.middleName || "",
-        lastName: response.lastName || "",
-        username: response.username || "",
-        password: "", // Never fill password from backend
-        dateOfBirth: response.dateOfBirth || "",
-        address: response.address || "",
-        phone: response.phone || "",
-        personalEmail: response.email || "",
-        workEmail: response.workEmail || "",
-        location: response.location || "",
-        bio: response.bio || "",
-      };
-    }
-    console.log('Profile Data:', response);
-  } catch (error) {
-    console.error('Error fetching profile data:', error);
-  }
-});
+// Utility function to format date to MM-DD-YYYY
+function formatDate(dateString: string): string {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = { month: "2-digit", day: "2-digit", year: "numeric" };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+}
 
+// Define the toggleEdit function
 function toggleEdit(section: string) {
   if (editSection.value === section) {
     // Save changes
     editSection.value = null;
+    console.log("Saved changes for section:", section);
     // 🚀 Add API call here to save changes
   } else {
     editSection.value = section;
+    console.log("Editing section:", section);
   }
 }
+
+onMounted(async () => {
+  console.log("Fetching profile data for user ID:", user.value.id);
+  if (!user.value.id) return;
+
+  const { data, error } = await useFetch('/api/fetchProfileData', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: { userId: user.value.id },
+  });
+
+  // Wait for the data to be ready
+  if (data.value) {
+    console.log("Fetched data:", data.value);
+
+    // Map the API response to userData
+    userData.value = {
+      firstName: data.value.first_name || "",
+      middleName: data.value.middle_name || "",
+      lastName: data.value.last_name || "",
+      username: data.value.sec_username || "",
+      password: data.value.sec_password_hash || "",
+      dateOfBirth: formatDate(data.value.date_of_birth), // Format date to MM-DD-YYYY
+      address: data.value.address || "",
+      phone: data.value.phone_number || "",
+      personalEmail: data.value.sec_email || "",
+      workEmail: "", // No work email in the response
+      location: "", // No location in the response
+      bio: "Full-stack developer. Coffee enthusiast ☕ | Sharing code and ideas.", // Default bio
+    };
+  } else {
+    console.error("Error fetching profile data:", error.value);
+  }
+});
 </script>
 
 <style scoped>
